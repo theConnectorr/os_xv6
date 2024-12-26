@@ -151,8 +151,9 @@ found:
   memset(&p->context, 0, sizeof(p->context));
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
-
+#ifdef LAB_PGTBL
   p->usyscall->pid = p->pid;
+#endif
   return p;
 }
 
@@ -203,7 +204,6 @@ proc_pagetable(struct proc *p)
     uvmfree(pagetable, 0);
     return 0;
   }
-
 
   // map the trampoline code (for system call return)
   // at the highest user virtual address.

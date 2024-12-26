@@ -82,13 +82,15 @@ sys_pgaccess(void)
   argaddr(2, &uaddr);
   
   struct proc *p = myproc();
-  for(int i=0; i<pgnum; i++){
-    pte_t* pte = walk(p->pagetable, addr+i*PGSIZE, 0);
-    if(*pte & PTE_A){
+  for(int i = 0; i < pgnum; i++) {
+    pte_t* pte = walk(p->pagetable, addr + i * PGSIZE, 0);
+    
+    if (*pte & PTE_A) {
       bitmask |= (1 << i);
       *pte &= (~PTE_A);
     }
   }
+
   copyout(p->pagetable, uaddr, (char *)&bitmask, sizeof(bitmask));
   return 0;
 }

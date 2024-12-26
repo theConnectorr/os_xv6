@@ -475,13 +475,13 @@ vmprint_rec(pagetable_t pagetable, int level) {
     if (level > 2)
       continue;
 
-    if((pte & PTE_V) && (pte & (PTE_R|PTE_W|PTE_X)) == 0){
-      
+    if((pte & PTE_V) && (pte & (PTE_R|PTE_W|PTE_X)) == 0){  
       printf("%s%d: pte %p pa %p\n", getlevel(level), i, pte, child);
       vmprint_rec((pagetable_t)child, level + 1);
     } else if(pte & PTE_V){
       printf("%s%d: pte %p pa %p\n", getlevel(level), i, pte, child);
     }
+
   }
 }
 

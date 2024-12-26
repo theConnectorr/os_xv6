@@ -69,8 +69,8 @@
 //   USYSCALL (shared with kernel)
 //   TRAPFRAME (p->trapframe, used by the trampoline)
 //   TRAMPOLINE (the same page as in the kernel)
-#define USYSCALL (TRAPFRAME - PGSIZE)
 #define TRAPFRAME (TRAMPOLINE - PGSIZE)
+#define USYSCALL (TRAPFRAME - PGSIZE)
 #ifdef LAB_PGTBL
 struct usyscall {
   int pid;  // Process ID
