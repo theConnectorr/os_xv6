@@ -81,6 +81,9 @@ sys_pgaccess(void)
   argint(1, &pgnum);
   argaddr(2, &uaddr);
   
+  if (pgnum > 64)
+    return -1;
+
   struct proc *p = myproc();
   for(int i = 0; i < pgnum; i++) {
     pte_t* pte = walk(p->pagetable, addr + i * PGSIZE, 0);
@@ -91,7 +94,9 @@ sys_pgaccess(void)
     }
   }
 
-  copyout(p->pagetable, uaddr, (char *)&bitmask, sizeof(bitmask));
+  if (copyout(p->pagetable, uaddr, (char *)&bitmask, sizeof(bitmask)) < 0)
+    return -1;
+    
   return 0;
 }
 #endif
